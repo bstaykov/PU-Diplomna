@@ -1,0 +1,60 @@
+@CHARSET "UTF-8";
+body { 
+	width:100%; 
+}
+
+table {
+	width: 800px;
+}
+th {
+	text-align: center;
+}
+
+td.left-text {
+	text-align: left;
+}
+
+td#f5 {
+	text-align: center;
+	background-color: #00ff90;
+}
+
+h2 {
+	margin: 0 auto;
+	text-align: center;
+}
+a {
+	text-decoration:none;
+}
+a:HOVER {
+	text-decoration: underline;
+}
+table.logoutTable {
+	width: 200px;
+	position: fixed;
+	right: 3px;
+	top: 3px;
+}
+.inputSize {
+	width: 107px;
+}
+
+.form {
+	width: 800px;
+	margin: 0 auto;
+	position: absolute;
+	left : 50px;
+}
+.mainTable {
+	border-width: 5px;
+	border-color: #00ff90;
+}
+.statistic {
+	width: 300px;
+	position: fixed;
+	top: 113px;
+	right: 50px;
+	border-width: 5px;
+	border-color: #00ff90;
+	text-align: center;
+}

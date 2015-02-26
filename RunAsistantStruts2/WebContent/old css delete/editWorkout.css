@@ -1,0 +1,54 @@
+@CHARSET "UTF-8";
+
+.form {
+	width: 250px;
+	margin: 0 auto;
+}
+
+table {
+	width: 160px;
+}
+
+th {
+	text-align: right;
+}
+
+td.left-text {
+	text-align: left;
+}
+
+td#f5 {
+	text-align: center;
+	background-color: #00ff90;
+}
+.label-center{
+	text-align: center;
+}
+h2 {
+	width: 250px;
+	margin: 0 auto;
+	color: red;
+	text-align: center;
+}
+a {
+	text-decoration:none;
+}
+a:HOVER {
+	text-decoration: underline;
+}
+.logInfo {
+	width:270px;
+	margin: 0px;
+	position: fixed;
+	top:8px;
+	right:8px;
+}
+table.logoutTable {
+	width: 200px;
+	position: fixed;
+	right: 3px;
+	top: 3px;
+}
+.inputSize {
+	width: 107px;
+}

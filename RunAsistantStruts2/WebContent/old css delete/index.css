@@ -1,0 +1,45 @@
+@CHARSET "UTF-8";
+
+.form {
+	width: 270px;
+	margin: 0 auto;
+}
+
+table {
+	width: 270px;
+}
+
+th {
+	text-align: center;
+}
+
+td.left-text {
+	text-align: left;
+}
+
+td#f5 {
+	text-align: center;
+	background-color: #00ff90;
+}
+
+h2 {
+	width: 270px;
+	margin: 0 auto;
+	color: red;
+	text-align: center;
+}
+a {
+	text-decoration:none;
+}
+a:HOVER {
+	text-decoration: underline;
+}
+table.logoutTable {
+	width: 200px;
+	position: fixed;
+	right: 3px;
+	top: 3px;
+}
+.inputSize {
+	width: 107px;
+}

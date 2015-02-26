@@ -1,0 +1,75 @@
+@CHARSET "UTF-8";
+table, td, th {
+	border: 1px solid black;
+	border-collapse: collapse;
+	padding: 5px;
+	
+}
+tr:nth-child(even) {background: #CCC}
+tr:nth-child(odd) {background: #FFF}
+.form {
+	width: 400px;
+	margin: 0 auto;
+}
+.regForm { 
+	width:250px; margin:0 auto 
+}
+.regTable {
+	width: 250px;
+}
+
+
+th {
+	text-align: center;
+}
+
+td.left-text {
+	text-align: left;
+}
+
+td#f5 {
+	text-align: center;
+	background-color: #00ff90;
+}
+.label-center{
+	text-align: left;
+}
+h2 {
+	width: 250px;
+	margin: 0 auto;
+	color: red;
+	text-align: center;
+}
+a {
+	text-decoration:none;
+}
+a:HOVER {
+	text-decoration: underline;
+}
+.logInfo {
+	width:270px;
+	margin: 0px;
+	position: absolute;
+	top:46px;
+	right:8px;
+}
+.logoutTable {
+	width: 200px;
+	position: fixed;
+	right: 3px;
+	top: 3px;
+}
+.inputSize {
+	width: 107px;
+}
+.statistic {
+	width: 300px;
+}
+.mainTable{
+	width: 500px;
+	
+}
+.mainTable, .statistic, .wwFormTable {
+	text-align: center;
+	margin: 0 auto;
+}

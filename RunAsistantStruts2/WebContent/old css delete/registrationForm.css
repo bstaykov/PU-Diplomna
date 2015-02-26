@@ -1,0 +1,32 @@
+@CHARSET "UTF-8";
+
+.form { 
+	width:250px; margin:0 auto 
+	}
+	
+table {
+	width: 250px;
+}
+
+th {
+	text-align: right;
+}
+
+td.left-text {
+	text-align: left;
+}
+
+td#f5 {
+	text-align: center;
+	background-color: #00ff90;
+}
+a {
+	text-decoration:none;
+}
+a:HOVER {
+	text-decoration: underline;
+}
+h2 {
+	color: red;
+	text-align: center;
+}

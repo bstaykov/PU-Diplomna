@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+   "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+   "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.multipart.maxSize" value="108000" />
+	
+	<package name="start" extends="struts-default">
+		
+		<interceptors>
+         	<interceptor name="loginInterceptor" class="struts.stage.actions.LoginInterceptor" />
+            	
+            <interceptor-stack name="stack-with-login">
+  				<interceptor-ref name="loginInterceptor"/>
+  				<interceptor-ref name="defaultStack"/>
+ 			</interceptor-stack>
+ 			
+      	</interceptors>
+		
+		<!-- <default-interceptor-ref name="loginStack"> -->
+		
+		<global-results>
+   			<result name="loginInterceptorDispatch">/index.jsp</result>
+   			
+   			<result name="LinkMyTargetsAction" type="redirectAction">
+				<param name="actionName">linkMyTargets</param>
+         		<param name="namespace">/workouts</param>
+			</result>
+			
+			<result name="LinkSetTargetsAction" type="redirectAction">
+				<param name="actionName">linkSetTargets</param>
+         		<param name="namespace">/workouts</param>
+			</result>
+			
+			<result name="SetTargetsAction" type="redirectAction">
+				<param name="actionName">setTargets</param>
+         		<param name="namespace">/workouts</param>
+			</result>
+			
+			<result name="LinkToWorkoutsAction" type="redirectAction">
+				<param name="actionName">goToMyWorkouts</param>
+         		<param name="namespace">/workouts</param>
+			</result>
+			
+			<result name="InsertPageAction" type="redirectAction">
+				<param name="actionName">goInsertPageAction</param>
+         		<param name="namespace">/workouts</param>
+			</result>
+			
+			<result name="LinkChronometerAction" type="redirectAction">
+				<param name="actionName">linkChronometerAction</param>
+         		<param name="namespace">/workouts</param>
+			</result>
+			
+			<result name="InsertWorkoutAction" type="redirectAction">
+				<param name="actionName">goInsertPageAction</param>
+         		<param name="namespace">/workouts</param>
+			</result>
+			
+			<result name="GetEditWorkoutAction" type="redirectAction">
+				<param name="actionName">goToMyWorkouts</param>
+         		<param name="namespace">/workouts</param>
+			</result>
+			
+			<result name="UpdateWorkoutAction" type="redirectAction">
+				<param name="actionName">goToMyWorkouts</param>
+         		<param name="namespace">/workouts</param>
+			</result>
+			
+			<result name="DeleteWorkoutAction" type="redirectAction">
+				<param name="actionName">goToMyWorkouts</param>
+         		<param name="namespace">/workouts</param>
+			</result>
+			
+			<result name="TestAction" type="redirectAction">
+				<param name="actionName">test</param>
+         		<param name="namespace">/</param>
+			</result>
+			
+			<result name="LinkEditProfileAction" >/editProfile.jsp</result>
+			<result name="EditProfileAction" >/editProfile.jsp</result>		
+			
+			<result name="MonthlyPositionsAction" type="redirectAction">
+				<param name="actionName">monthlyPositions</param>
+         		<param name="namespace">/</param>
+			</result>
+			
+			<result name="AllTimesPositionsAction" type="redirectAction">
+				<param name="actionName">allTimesPositions</param>
+         		<param name="namespace">/</param>
+			</result>
+			
+			<result name="LinkCompetitionsAction" type="redirectAction">
+				<param name="actionName">linkCompetitions</param>
+         		<param name="namespace">/</param>
+			</result>
+			
+			<result name="LinkJoinCompetitionAction" type="redirectAction">
+				<param name="actionName">linkCompetitions</param>
+         		<param name="namespace">/</param>
+			</result>
+			
+			<result name="LinkLeaveCompetitionAction" type="redirectAction">
+				<param name="actionName">linkCompetitions</param>
+         		<param name="namespace">/</param>
+			</result>
+			
+			<result name="LinkInterestingFactsAction" type="redirectAction">
+				<param name="actionName">interestingFacts</param>
+         		<param name="namespace">/</param>
+			</result>
+			
+		</global-results>
+		
+		<action name="index">
+			<result>/index.jsp</result>
+		</action>
+
+		<action name="login" class="struts.stage.actions.LoginAction"
+			method="execute">
+			<result name="success" type="redirectAction">
+				<param name="actionName">goInsertPageAction</param>
+         		<param name="namespace">/workouts</param>
+			</result>
+			
+			<!-- redirect experiment WORKS-->
+			<result name="workouts" type="redirectAction">
+				<param name="actionName">goToMyWorkouts</param>
+         		<param name="namespace">/workouts</param>
+			</result>
+			<result name="insertWorkout" type="redirectAction">
+				<param name="actionName">goInsertPageAction</param>
+         		<param name="namespace">/workouts</param>
+			</result>
+			<result name="test" type="redirectAction">
+				<param name="actionName">test</param>
+         		<param name="namespace">/</param>
+			</result>
+			
+			<result name="targets" type="redirectAction">
+				<param name="actionName">linkSetTargets</param>
+         		<param name="namespace">/workouts</param>
+			</result>
+			
+			<result name="myTargets" type="redirectAction">
+				<param name="actionName">linkMyTargets</param>
+         		<param name="namespace">/workouts</param>
+			</result>
+			
+			<result name="LoginTestInterceptorAction" type="redirectAction">
+				<param name="actionName">loginTestInterceptor</param>
+         		<param name="namespace">/</param>
+			</result>
+			
+			<result name="error">/index.jsp</result>
+		</action>
+		
+		<action name="loginTestInterceptor" class="struts.stage.actions.LoginTestInterceptorAction"
+			method="execute">
+			
+			<interceptor-ref name="stack-with-login"/>
+            
+			
+			<result name="success">/workouts/insertWorkouts.jsp</result>
+			<result name="error">/error.jsp</result>
+			<result name="login">/index.jsp</result>
+			<!-- validate() -->
+			<result name="input">/index.jsp</result>
+		</action>
+		
+		<action name="logoutUserAction" class="struts.stage.actions.LoginAction"
+			method="logout">
+			<result name="success">/index.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		
+        <action name="logout2" class="struts.stage.actions.Logout2Action" >
+            <result name="success">/index.jsp</result>
+        </action>
+		
+		<action name="register" class="struts.stage.actions.RegistrationAction"
+			method="execute">
+			
+			<interceptor-ref name="defaultStack"/>
+       		<interceptor-ref name="fileUpload">
+           		<param name="allowedTypes">image/jpeg,image/gif</param>
+           		<param name="fileUpload.maximumSize">108000</param>
+      		</interceptor-ref>
+    		
+			<result name="success">/index.jsp</result>
+			<result name="error">/error.jsp</result>
+			<result name="notRegistered">/registerForm.jsp</result>
+			<!-- validate() -->
+			<result name="input">/registerForm.jsp</result>
+		</action>
+		
+		<!-- link! logs out first -->
+		<action name="registerLink" class="struts.stage.actions.LinkToRegisterAction"
+			method="execute">
+			
+			<result name="success">/registerForm.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		
+		<action name="test" class="struts.stage.actions.TestAction"
+			method="execute">
+			
+			<interceptor-ref name="stack-with-login"/>
+			
+			<result name="success">/test.jsp</result>
+			<result name="error">/index.jsp</result>	
+		</action>
+		
+		<action name="goInsertPageAction" class="struts.stage.actions.InsertPageAction"
+			method="execute">
+			
+			<interceptor-ref name="stack-with-login"/>
+			
+			<result name="success">/workouts/insertWorkouts.jsp</result>
+			<result name="error">/index.jsp</result>
+			<result name="input">/error.jsp</result>
+		</action>
+		
+		<action name="linkChronometer" class="struts.stage.actions.LinkChronometerAction"
+			method="execute">
+			<interceptor-ref name="stack-with-login"/>
+			<result name="success">/workouts/chronometer.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		
+		<action name="deleteWorkOut" class="struts.stage.actions.DeleteWorkoutAction">
+		
+			<interceptor-ref name="stack-with-login"/>
+         	<result name="success" type="redirectAction">
+				<param name="actionName">goToMyWorkouts</param>
+         		<param name="namespace">/workouts</param>
+			</result>
+         	<result name="error">/error.jsp</result>
+		</action>
+		
+		<action name="getEditWorkout" class="struts.stage.actions.GetEditWorkoutAction" method="execute">
+         	
+			<interceptor-ref name="stack-with-login"/>
+			
+         	<result name="success">/workouts/editWorkout.jsp</result>
+         	<result name="error">/error.jsp</result>
+         	<result name="wrongData" type="redirectAction">
+				<param name="actionName">goToMyWorkouts</param>
+         		<param name="namespace">/workouts</param>
+			</result>
+			
+			<!-- validate() -->
+			<result name="input" type="redirectAction">
+				<param name="actionName">goToMyWorkouts</param>
+         		<param name="namespace">/workouts</param>
+			</result>
+		</action>
+		
+		<action name="updateWorkout" class="struts.stage.actions.UpdateWorkoutAction"
+			method="execute">
+			
+			<interceptor-ref name="stack-with-login"/>
+			
+			<result name="success" type="redirectAction">
+				<param name="actionName">goToMyWorkouts</param>
+         		<param name="namespace">/workouts</param>
+			</result>
+			<result name="incorectInput">/workouts/editWorkout.jsp</result>
+			<result name="error">/error.jsp</result>
+			
+			<!-- validate() -->
+			<result name="input">/workouts/editWorkout.jsp</result>
+		</action>
+				
+		<action name="insertWorkout" class="struts.stage.actions.InsertWorkoutAction"
+			method="execute">
+			
+			<interceptor-ref name="stack-with-login"/>
+			
+			
+			<result name="success">/workouts/insertWorkouts.jsp</result>
+			<!-- <result name="wrongData">/workouts/insertWorkouts.jsp</result>  -->
+			<result name="error">/error.jsp</result>
+			
+			<!-- validate() -->
+			<result name="input">/workouts/insertWorkouts.jsp</result>
+		</action>
+		
+		<action name="goToMyWorkouts" class="struts.stage.actions.LinkToWorkoutsAction"
+			method="execute">
+			
+			<interceptor-ref name="stack-with-login"/>
+			
+			<result name="success">/workouts/myWorkouts.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+		
+		<action name="linkSetTargets" class="struts.stage.actions.LinkSetTargetsAction"
+			method="execute">
+			<interceptor-ref name="stack-with-login"/>
+			<result name="success">/workouts/setTargets.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+		
+		<action name="setTargets" class="struts.stage.actions.SetTargetsAction"
+			method="execute">
+			<interceptor-ref name="stack-with-login"/>
+			<result name="success" type="redirectAction">
+				<param name="actionName">linkMyTargets</param>
+         		<param name="namespace">/workouts</param>
+			</result>
+			<result name="error">/error.jsp</result>
+			
+			<!-- validate() -->
+			<result name="input">/workouts/setTargets.jsp</result>
+		</action>
+		
+		<action name="linkMyTargets" class="struts.stage.actions.LinkMyTargetsAction"
+			method="execute">
+			<interceptor-ref name="stack-with-login"/>
+			<result name="success">/workouts/myTargets.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+		
+		<action name="editProfile" class="struts.stage.actions.EditProfileAction"
+			method="execute">
+			<interceptor-ref name="stack-with-login"/>
+       		<interceptor-ref name="fileUpload">
+           		<param name="allowedTypes">image/jpeg,image/gif, image/png</param>
+           		<param name="fileUpload.maximumSize">108000</param>
+      		</interceptor-ref>
+    		
+			<result name="success">/editProfile.jsp</result>
+			<result name="error">/error.jsp</result>
+			<!-- validate() -->
+			<result name="input">/editProfile.jsp</result>
+		</action>
+		
+		<action name="linkEditProfile" class="struts.stage.actions.LinkEditProfileAction"
+			method="execute">
+			<interceptor-ref name="stack-with-login"/>
+			<result name="success">/editProfile.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		
+		<action name="monthlyPositions" class="struts.stage.actions.MonthlyPositionsAction"
+			method="execute">
+			<interceptor-ref name="stack-with-login"/>
+			<result name="success">workouts/monthlyPositions.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		
+		<action name="allTimesPositions" class="struts.stage.actions.AllTimesPositionsAction"
+			method="execute">
+			<interceptor-ref name="stack-with-login"/>
+			<result name="success">workouts/allTimesPositions.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		<action name="linkCompetitions" class="struts.stage.actions.LinkCompetitionsAction"
+			method="execute">
+			<interceptor-ref name="stack-with-login"/>
+			<result name="success">competitions.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		
+		<action name="joinCompetition" class="struts.stage.actions.LinkJoinCompetitionAction"
+			method="execute">
+			<interceptor-ref name="stack-with-login"/>
+			<result name="success" type="redirectAction">
+				<param name="actionName">linkCompetitions</param>
+         		<param name="namespace">/</param>
+			</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		
+		<action name="leaveCompetition" class="struts.stage.actions.LinkLeaveCompetitionAction"
+			method="execute">
+			<interceptor-ref name="stack-with-login"/>
+			<result name="success" type="redirectAction">
+				<param name="actionName">linkCompetitions</param>
+         		<param name="namespace">/</param>
+			</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		
+		<action name="interestingFacts" class="struts.stage.actions.LinkInterestingFactsAction"
+			method="execute">
+			<interceptor-ref name="stack-with-login"/>
+			<result name="success">interestingFacts.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
+	</package>
+	
+</struts>

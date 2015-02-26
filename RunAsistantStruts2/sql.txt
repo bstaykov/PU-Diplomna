@@ -1,0 +1,291 @@
+/////////////////////////////////////////////////////////// COMPETITIONS ////////////////////////////////
+
+CREATE TABLE COMPETITIONS(
+	ID IDENTITY PRIMARY KEY, 
+        NAME VARCHAR_IGNORECASE(50) NOT NULL,
+        START_DATE DATE NOT NULL,
+        END_DATE DATE NOT NULL,
+        isVISIBLE BOOLEAN NOT NULL,
+        isSigningOPEN BOOLEAN NOT NULL);
+
+INSERT INTO COMPETITIONS ( NAME, START_DATE , END_DATE , ISVISIBLE , ISSIGNINGOPEN )
+VALUES('JUNE', '2014-06-01', '2014-06-30', TRUE, TRUE);
+
+select TOP 10 a.id, first_name, last_name, sum(km) as KM from accounts_info a join workouts w on a.id = w.id 
+join COMPETITIONS_PARTICIPANTS cp on cp.id = w.id
+join competitions comp on comp.competition_id = cp.competition_id
+where date <= (select end_date from competitions where competition_id = 1) and 
+date >= (select start_date from competitions where competition_id = 1)
+group by a.id order by sum(km) desc;
+
+//////////////////////////////////////////////////////////// COMPETITIONS_PARTICIPANTS ///////////////////////
+
+CREATE TABLE COMPETITIONS_PARTICIPANTS (
+        COMPETITION_ID BIGINT NOT NULL,
+        ID BIGINT NOT NULL,
+        foreign key(COMPETITION_ID) references COMPETITIONS(COMPETITION_ID),
+        foreign key(ID) references accounts_info(ID)
+);
+
+INSERT INTO COMPETITIONS_PARTICIPANTS ( COMPETITION_ID, ID)
+VALUES(1, 36);
+
+////////////////////////////////////////////////////////// select all ///////////////////////////////
+
+SELECT * FROM ACCOUNTS_INFO ;
+SELECT * FROM WORKOUTS ;
+SELECT * FROM ROLES 
+
+
+////////////////////////////////////////////////////////// targets ///////////////////////////
+
+create table targets(
+ID BIGINT NOT NULL, 
+time_5km bigint,
+ time_10km bigint,
+km bigint,
+ foreign key(ID) references accounts_info(ID)
+);
+
+/////
+insert into targets ( id, time_5km , time_10km, km )
+values(2, 1250, 2600, 50);
+
+select time_5km, time_10km , km from targets where id = 2;
+/////
+DELETE FROM TARGETS WHERE ID = 2; 
+					
+INSERT INTO TARGETS (ID, TIME_5KM, TIME_10KM, KM) 
+VALUES( 2, 200 ,300 ,12);
+
+update targets set .... , .... ,.... ,km = ? where id = ?;
+
+select sum(km) from workouts where date <= '2014-04-18' and date >= '2014-03-18' and id = 2;
+
+/////////////////////////////////////////////////////////////// fastes 5k//////////////////////////////////////////
+
+select * from  workouts where km = 5 order by time asc;
+
+select a.first_name,  w.id, w.time from accounts_info a join workouts w on a.id = w.id  where km = 5 order by time asc;
+
+
+
+select MIN(time) from  workouts where km = 5 and ID = 5;
+
+select COUNT(KM) from  workouts where ID = 5;
+
+
+///////////////////////////////// ACCOUNT_INFO //////////////////////////////
+
+CREATE TABLE ACCOUNTS_INFO(
+	ID IDENTITY PRIMARY KEY, 
+	USER_NAME VARCHAR(25) UNIQUE NOT NULL, 
+	PASSWORD VARCHAR(32) NOT NULL,
+	FIRST_NAME VARCHAR_IGNORECASE(25) NOT NULL, 
+	LAST_NAME VARCHAR_IGNORECASE(25) NOT NULL, 
+	CITY VARCHAR_IGNORECASE(25)  NOT NULL, 
+	EMAIL VARCHAR_IGNORECASE(50) UNIQUE NOT NULL, 
+	AGE SMALLINT NOT NULL, 
+	GENDER VARCHAR (6) DEFAULT 'MALE' NOT NULL, 
+	ROLE_ID BIGINT(19) DEFAULT 1,
+	PICTURE_URL VARCHAR_IGNORECASE(32) not null, 
+        PICTURE BLOB, 
+	FOREIGN KEY(ROLE_ID) REFERENCES ROLES(ROLE_ID));
+
+///////////////////////////////INSERT INTO ACCOUNT_INFO ////////////////////
+
+insert into accounts_info ( user_name , password , first_name , last_name, city, age, gender , role_id, email, picture)
+values ('user1', 'pass', 'boycho', 'staykov' ,'plovdiv' ,23 , 'male', 2, 'abv@abv.bg, blop);
+
+////////////////////////////////////////////////// ROLES /////////////////////////////////////////////////////////////////////////////////////////////////
+
+CREATE TABLE ROLES(ROLE_ID IDENTITY PRIMARY KEY, ROLE_NAME VARCHAR_IGNORECASE(25)  NOT NULL)
+
+INSERT INTO ROLES (ROLE_NAME )
+VALUES('USER')
+
+///////////////////////////////////////////////////// select role_user_pass //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+select r.role_name, a.user_name, a.password  from roles r join accounts_info a on r.role_id = a.user_role  where user_name = 'user1' and password  ='pass' 
+
+select r.role_name, a.user_name , a.ID, a.first_name, a.last_name from roles r join accounts_info a "
+					+ "on r.role_id = a.role_id where user_name = ? and password  = ?
+////////////////////////////////////////////////////// WORKOUTS ///////////////////////////////////////////////////////////////////////////////////
+
+CREATE TABLE WORKOUTS (
+ID BIGINT NOT NULL, 
+KM DECIMAL(10,3) NOT NULL,
+TIME TIME NOT NULL,
+PLACE VARCHAR_IGNORECASE(25) NOT NULL,
+DATE DATE NOT NULL,
+PACE VARCHAR_IGNORECASE(25) NOT NULL,
+KM_HOUR  VARCHAR_IGNORECASE(25) NOT NULL,
+INSERT_DATE TIMESTAMP NOT NULL,
+WORKOUT_ID IDENTITY,
+TIME_IN_SECONDS INT NOT NULL,
+FOREIGN KEY(ID) REFERENCES ACCOUNTS_INFO (ID),
+);
+
+
+///////////////////////////////////////////////////////////// INSERT INTO WORCOUTS ////////////////////////////////////////////////////////////////////
+
+INSERT INTO WORKOUTS ( ID, KM, TIME , PLACE , DATE)
+VALUES(1, 1.15, '00:03:22', 'PLOVDIV', '2014-02-13');
+
+///////////////////////////////////////////////////////////// SELECT WORKOUTS ///////////////////////////////////////////////////////////////////////////////////
+
+SELECT * FROM WORKOUTS where id = 1 order by date desc
+
+SELECT KM, TIME, PLACE, DATE FROM WORKOUTS where id = 1 order by date desc
+
+SELECT ID, sum(km) FROM WORKOUTS group by ID order by sum(km) desc;
+
+
+////plus////
+
+SELECT ID, COUNT(ID) FROM TABLE_NAME group by ID order by COUNT(ID) desc;
+
+SELECT w.ID, a.first_name, COUNT(w.ID) as BOOKS_TAKEN FROM TABLE1_NAME a join TABLE2_NAME w on a.ID = w.ID group by w.ID order by COUNT(w.ID) desc;
+
+
+
+select a.id, a.first_name, a.last_name, sum(km) from accounts_info a join workouts w on a.id = w.id where date <= '2014-05-08' group by a.id order by sum(km) desc;
+
+
+
+select TOP 10 a.id, a.first_name, a.last_name, sum(km) from accounts_info a join workouts w on a.id = w.id where date <= '2014-05-08' group by a.id order by sum(km) desc;
+
+
+
+  //TO DO//  //TO DO//  //TO DO//  //TO DO//  //TO DO//  //TO DO//  //TO DO//  //TO DO//  //TO DO//  //TO DO//  //TO DO//  //TO DO//  //TO DO//  
+
+select TOP 10 a.id, first_name, last_name, sum(km), sum(TIME_IN_SECONDS) from accounts_info a join workouts w on a.id = w.id where date <= '2014-05-08' group by a.id order by 
+sum(km) desc;
+
+
+select min(select min(time_in_seconds) from workouts where km = 5 and id = 37),min (select min(time_in_seconds) from workouts where km = 10 and id = 37) , sum(km) as KM from workouts where id = 37;
+
+select min(select min(time_in_seconds) from workouts where km = 5),min (select min(time_in_seconds) from workouts where km = 10) from workouts;
+
+
+select sum(km) from WORKOUTS w join ACCOUNTS_INFO a on w.id = a.id where gender = 'men';
+
+
+///////// MEN vs WOMEN
+select (select sum(km) from WORKOUTS w join ACCOUNTS_INFO a on w.id = a.id where gender = 'men') as MEN,  (select sum(km) from WORKOUTS w join ACCOUNTS_INFO a on w.id = a.id where gender = 'women') as WOMEN;
+
+/// MIN 5km, MIN 10km, TOTAL km
+select (select min(time_in_seconds) from workouts where km = 5 and id = 37) as MIN_5KM, (select min(time_in_seconds) from workouts where km = 10 and id = 37) as MIN_10km, sum(km) as TOTAL_KM from workouts where id = 37;
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////// COMPETITIONS /////////////////
+
+create table competitions 
+( starts date not null,
+ends date not null);
+
+insert into competitions (starts , ends )
+values ('2014-04-15', '2014-05-15');
+
+select a.id, a.first_name, a.last_name, w.km from accounts_info a join workouts w on a.id = w.id where date <= '2014-05-08' and date >= '2014-04-08';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE TABLE ROLES(ID IDENTITY, ROLE varchar(25) default 'user', foreign key (ID) REFERENCES LOGIN2(ID))
+
+///////////////////////////////////////
+
+CREATE TABLE REGISTRATION(
+ID IDENTITY, 
+FirstName varchar(25) not null,
+ LastName varchar(25) not null,
+ City varchar(25) not null,
+ EMAIL varchar(25) not null UNIQUE, 
+AGE int not null,
+ GENDER varchar(25) not null default 'MALE',
+foreign key (ID) REFERENCES LOGIN2(ID))
+
+///////////////////////////////////
+insert into REGISTRATION( firstname , lastname , id , age , city , email, gender )
+values('Todor', 'Ivanov', 4, 23, 'Plovdiv', 'da@abv.bg', 'male'); 
+
+///////////////////////////////
+
+insert into roles ( id , role )
+values (1, 'user');
+//////////////////////////////////////////////////////insert into LOGIN2
+
+insert into login2 ( username , password )
+values('Todor', 'Vergov');
+///////////////////////////////////////////////////////select ID
+
+select id from login2 where username = 'IVAN' and password = 'TODOROV'
+///////////////////////
+
+
+
+/////////////select role
+
+SELECT r.role 
+FROM roles r JOIN login2 l
+on r.id = l.id 
+where username = 'BOYCHO' and password = 'STAYKOV'
+
+SELECT r.role, l.username
+FROM roles r JOIN login2 l
+on r.id = l.id 
+where username = 'BOYCHO' and password = 'STAYKOV'
+
+
+////////////////// SELECT ID, USERNAME
+
+SELECT ID, USERNAME
+FROM LOGIN2
+WHERE USERNAME='BOYCHO' AND PASSWORD ='STAYKOV'
+
+////////////////// select role
+
+select role
+from roles 
+where id =1
+
+//////////////////////////////////////// select role by id
+
+select roles.role
+from roles join login2
+on roles.id = login2.id
+where roles.id = 1 and login2.id = 1
+
+select roles.role, login2.username
+from roles join login2
+on roles.id = login2.id
+where roles.id = 1 and login2.id = 1
+
+///////////////////////// select is CASE SENSITIVE
+select id
+from login2
+where username = 'BOYCHO' and password = 'STAYKOV'
+//////////////////////////
